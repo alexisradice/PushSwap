@@ -45,7 +45,7 @@ void	ft_init_all(t_stack **stack, int argc, char **argv)
 			new_stack -> next = *stack;
 			*stack = new_stack;
 		}
-		printf("%d--%d",argc, ft_atoi(argv[temp]));
+		// printf("%d--%d",argc, ft_atoi(argv[temp]));
 		temp--;
 	}
 }
@@ -102,44 +102,85 @@ void	ft_index(t_stack *stack, int argc)
 
 void	ft_small_sort(t_stack **stack)
 {
-	// while((*stack)->index > (*stack)->next->index && (*stack)->next->index > (*stack)->next->next->index)
-	// {
+	while((*stack)->value > (*stack)->next->value || (*stack)->next->index > (*stack)->next->next->value)
+	{
 		if ((*stack)->index > (*stack)->next->index && (*stack)->index > (*stack)->next->next->index)
 			ft_rotate(stack);
-		else if ((*stack)->next->index > (*stack)->index && (*stack)->index > (*stack)->next->next->index)
+		else if ((*stack)->next->index > (*stack)->index && (*stack)->next->index > (*stack)->next->next->index)
 			ft_reverse_rotate(stack);
 		else if ((*stack)->index > (*stack)->next->index)
 			ft_swap(stack);
-	// }
-	printf("%d-%d-%d",(*stack)->index, (*stack)->next->index, (*stack)->next->next->index);
+		// printf("%d--%d--%d\n",(*stack)->value, (*stack)->next->value, (*stack)->next->next->value);
+	}
+	// printf("%d-%d-%d",(*stack)->value, (*stack)->next->value, (*stack)->next->next->value);
 }
 
-// void	ft_big_sort(stack_a, stack_b)
-// {
-// 	return ;
-// }
+void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
+{
+	int median;
+	int count;
 
-void	ft_push_swap(t_stack **stack_a, int argc)
+	median = (argc - 1) / 2;
+	count = 1;
+	while ((*stack_a)->next->next->next != NULL)
+	{
+		if (count != median)
+		{
+			if((*stack_a)->value < median)
+			{
+				ft_push(stack_b, stack_a);
+				count++;
+			}
+			else
+				ft_rotate(stack_a);
+		}
+		else
+			ft_push(stack_b, stack_a);
+		// printf("%d**%d\n", (*stack_a)->value, (*stack_a)->index);
+		// printf("%d**%d\n", count, median);
+	}
+	ft_small_sort(stack_a);
+	ft_set_position(stack_a);
+	ft_set_position(stack_b);
+
+}
+
+void	ft_set_position(t_stack **stack)
+{
+	int count;
+	t_stack	*test;
+
+	count = 0;
+	test = (*stack);
+	while (test)
+	{
+		(*stack)->position = count;
+		count++;
+		test = test->next;
+		printf("%d\n", (*stack)->position);
+	}
+}
+
+void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int argc)
 {
 	if (argc == 3)
 		ft_swap(stack_a);
 	else if (argc == 4)
 		ft_small_sort(stack_a);
-	// else
-	// 	ft_big_sort(stack_a, stack_b);
-	// printf("5-%d",argc);
+	else
+		ft_big_sort(stack_a, stack_b, argc);
 }
 
-void	ft_push(t_stack *stack_dest, t_stack *stack_src)
+void	ft_push(t_stack **stack_dest, t_stack **stack_src)
 {
 	t_stack	*temp;
 
-	if (!stack_src)
+	if (!(*stack_src))
 		return ;
-	temp = stack_src->next;
-	stack_src->next = stack_dest;
-	stack_dest = stack_src;
-	stack_src = temp;
+	temp = (*stack_src)->next;
+	(*stack_src)->next = (*stack_dest);
+	(*stack_dest) = (*stack_src);
+	(*stack_src) = temp;
 }
 
 void	ft_swap(t_stack **stack)
@@ -151,6 +192,7 @@ void	ft_swap(t_stack **stack)
 		temp = (*stack)->value;
 		(*stack)->value = (*stack)->next->value;
 		(*stack)->next->value = temp;
+		printf("%d-=-%d-=-%d\n",(*stack)->index, (*stack)->next->index, (*stack)->next->next->index);
 	}
 }
 
@@ -251,18 +293,19 @@ void	ft_free_all(t_stack *stack)
 int main(int argc, char **argv)
 {
     t_stack *stack_a;
-    // t_stack *stack_b;
+    t_stack *stack_b;
 
 	stack_a = NULL;
-	// stack_b = NULL;
+	stack_b = NULL;
     if (argc == 1)
 		return (0);
 	ft_init_all(&stack_a, argc, argv);
 	ft_index(stack_a, argc);
 	printf("Before\n");
 	ft_display_stack(stack_a);
-	ft_push_swap(&stack_a, argc);
-	// ft_push(stack_b, stack_a);
+	// ft_display_stack(stack_b);
+	ft_push_swap(&stack_a, &stack_b, argc);
+	// ft_push(&stack_b, &stack_a);
 	// ft_swap(&stack_a);
 	// ft_rotate(&stack_a);
 	// ft_reverse_rotate(&stack_a);
@@ -270,6 +313,6 @@ int main(int argc, char **argv)
 	ft_display_stack(stack_a);
 	// ft_display_stack(stack_b);
 	ft_free_all(stack_a);
-	// ft_free_all(stack_b);
+	ft_free_all(stack_b);
     return (0);
 }
