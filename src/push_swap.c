@@ -126,7 +126,7 @@ void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 	{
 		if (count != median)
 		{
-			if((*stack_a)->value < median)
+			if((*stack_a)->index < median)
 			{
 				ft_push(stack_b, stack_a);
 				count++;
@@ -142,7 +142,38 @@ void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 	ft_small_sort(stack_a);
 	ft_set_position(stack_a);
 	ft_set_position(stack_b);
+	ft_set_target_position(stack_a, stack_b);
 
+}
+
+void	ft_set_target_position(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack *temp_a;
+	t_stack *temp_b;
+	// t_stack *temp;
+
+	temp_a = (*stack_a);
+	temp_b = (*stack_b);
+	// temp = NULL;
+	while (temp_b)
+	{
+		temp_a = (*stack_a);
+		while (temp_a)
+		{	
+			if (temp_a->index < temp_b->index)
+			{
+				if (temp_a->next != NULL && temp_a->next->index > temp_b->index)
+				{
+					temp_b->target_position = temp_a->next->position;
+					printf("Value B-A: %d\n", temp_b->value - temp_a->value);
+					printf("ValueA: %d - ValueB: %d\n", temp_a->value, temp_b->value);
+					printf("TargetPositionB: %d - PositionB: %d\n", temp_b->target_position, temp_b->position);
+				}
+			}
+			temp_a = temp_a->next;
+		}
+		temp_b = temp_b->next;
+	}
 }
 
 void	ft_set_position(t_stack **stack)
@@ -154,10 +185,10 @@ void	ft_set_position(t_stack **stack)
 	test = (*stack);
 	while (test)
 	{
-		(*stack)->position = count;
+		test->position = count;
 		count++;
 		test = test->next;
-		printf("%d\n", (*stack)->position);
+		// printf("%d\n", (*stack)->position);
 	}
 }
 
@@ -185,14 +216,16 @@ void	ft_push(t_stack **stack_dest, t_stack **stack_src)
 
 void	ft_swap(t_stack **stack)
 {
-	int	temp;
+	t_stack	*temp;
 
-	if ((*stack)->value && (*stack)->next)
+	// printf("%d-=-%d-=-%d\n",(*stack)->index, (*stack)->next->index, (*stack)->next->next->index);
+	if ((*stack) && (*stack)->next)
 	{
-		temp = (*stack)->value;
-		(*stack)->value = (*stack)->next->value;
-		(*stack)->next->value = temp;
-		printf("%d-=-%d-=-%d\n",(*stack)->index, (*stack)->next->index, (*stack)->next->next->index);
+		temp = (*stack);
+		(*stack) = (*stack)->next;
+		temp->next = (*stack)->next;
+		(*stack)->next = temp;
+		// printf("%d-=-%d-=-%d\n",(*stack)->index, (*stack)->next->index, (*stack)->next->next->index);
 	}
 }
 
@@ -270,7 +303,7 @@ void	ft_display_stack(t_stack *stack)
 	temp = stack;
 	while (stack != NULL)
 	{
-		printf("Value: %d - Index: %d\n", stack->value, stack->index);
+		printf("Value: %d - Index: %d - Position: %d - TargetPosition: %d\n", stack->value, stack->index, stack->position, stack->target_position);
 		stack = stack->next;
 	}
 	stack = temp;
@@ -302,16 +335,20 @@ int main(int argc, char **argv)
 	ft_init_all(&stack_a, argc, argv);
 	ft_index(stack_a, argc);
 	printf("Before\n");
+	printf("Stack A\n");
 	ft_display_stack(stack_a);
-	// ft_display_stack(stack_b);
+	printf("Stack B\n");
+	ft_display_stack(stack_b);
 	ft_push_swap(&stack_a, &stack_b, argc);
 	// ft_push(&stack_b, &stack_a);
 	// ft_swap(&stack_a);
 	// ft_rotate(&stack_a);
 	// ft_reverse_rotate(&stack_a);
 	printf("After\n");
+	printf("Stack A\n");
 	ft_display_stack(stack_a);
-	// ft_display_stack(stack_b);
+	printf("Stack B\n");
+	ft_display_stack(stack_b);
 	ft_free_all(stack_a);
 	ft_free_all(stack_b);
     return (0);
