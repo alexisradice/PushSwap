@@ -150,11 +150,13 @@ void	ft_set_target_position(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack *temp_a;
 	t_stack *temp_b;
-	// t_stack *temp;
+	int	lowest;
+	t_stack *temp;
 
 	temp_a = (*stack_a);
 	temp_b = (*stack_b);
-	// temp = NULL;
+	lowest = INT_MAX;
+	temp = NULL;
 	while (temp_b)
 	{
 		temp_a = (*stack_a);
@@ -169,6 +171,15 @@ void	ft_set_target_position(t_stack **stack_a, t_stack **stack_b)
 					printf("ValueA: %d - ValueB: %d\n", temp_a->value, temp_b->value);
 					printf("TargetPositionB: %d - PositionB: %d\n", temp_b->target_position, temp_b->position);
 				}
+				else if (temp_a->index < lowest)
+				{
+					lowest = temp_a->index;
+					temp_b->target_position = temp_a->position;
+				}
+			}
+			else
+			{
+				temp_b->target_position = lowest;
 			}
 			temp_a = temp_a->next;
 		}
