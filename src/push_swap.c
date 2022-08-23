@@ -102,7 +102,7 @@ void	ft_index(t_stack *stack, int argc)
 
 void	ft_small_sort(t_stack **stack)
 {
-	while((*stack)->value > (*stack)->next->value || (*stack)->next->index > (*stack)->next->next->value)
+	while((*stack)->index > (*stack)->next->index || (*stack)->next->index > (*stack)->next->next->index)
 	{
 		if ((*stack)->index > (*stack)->next->index && (*stack)->index > (*stack)->next->next->index)
 			ft_rotate(stack);
@@ -149,8 +149,8 @@ void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 		ft_set_position(stack_b);
 		ft_set_target_position(stack_a, stack_b);
 		ft_set_cost(stack_a, stack_b);
-		printf("SmallA: %d, SmallB: %d", (*ft_small_cost(*stack_a, &lowest_cost))->cost_a, (*ft_small_cost(*stack_b, &lowest_cost))->cost_a);
-		// ft_movements(ft_small_cost(*stack_a, &lowest_cost), ft_small_cost(*stack_b, &lowest_cost));
+		printf("SmallA: %d, SmallB: %d\n", (*ft_small_cost(*stack_a, &lowest_cost))->cost_a, (*ft_small_cost(*stack_b, &lowest_cost))->cost_a);
+		ft_movements(ft_small_cost(*stack_a, &lowest_cost), ft_small_cost(*stack_b, &lowest_cost));
 	// }
 }
 
@@ -233,14 +233,15 @@ void	ft_set_cost(t_stack **stack_a, t_stack **stack_b)
 		if (temp_b->target_position < median_a)
 			temp_b->cost_a = temp_b->target_position;
 		else
-			temp_b->cost_a = temp_b->target_position - median_a;
+			temp_b->cost_a = temp_b->target_position - ft_count_stack(*stack_a);
 		temp_b = temp_b->next;
 	}
 }
 
 void ft_movements(t_stack **stack_a, t_stack **stack_b)
 {
-	// t_stack *temp;
+	// t_stack *temp_a;
+	// t_stack *temp_b;
 	int i;
 
 	// temp = (*stack_b);
@@ -334,12 +335,10 @@ t_stack	**ft_small_cost(t_stack *stack, t_stack **lowest_cost)
 	t_stack	*temp;
 	int lowest;
 
-	printf("test");
 	temp = stack;
 	lowest = INT_MAX;
 	while (stack != NULL)
 	{
-		printf("test");
 		if ((temp->cost_a + temp->cost_b) < lowest)
 		{
 			lowest = temp->cost_a + temp->cost_b;
