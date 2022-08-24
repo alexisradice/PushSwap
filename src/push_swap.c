@@ -154,50 +154,49 @@ void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 		ft_set_target_position(stack_a, stack_b);
 		ft_set_cost(stack_a, stack_b);
 
-		printf("Stack A\n");
-		ft_display_stack(*stack_a);
-		printf("Stack B\n");
-		ft_display_stack(*stack_b);
+		// printf("Stack A\n");
+		// ft_display_stack(*stack_a);
+		// printf("Stack B\n");
+		// ft_display_stack(*stack_b);
 
 		// printf("SmallA: %d, SmallB: %d\n", (*ft_small_cost(*stack_a, &lowest_cost))->cost_a, (*ft_small_cost(*stack_b, &lowest_cost))->cost_a);
-		ft_movements(ft_small_cost(*stack_b, &lowest_cost), stack_a, stack_b);
+		ft_movements(ft_small_cost(stack_b, &lowest_cost), stack_a, stack_b);
 		i++;
 	}
 	ft_set_position(stack_a);
-	printf("Stack A\n");
-	ft_display_stack(*stack_a);
-	printf("Stack B\n");
-	ft_display_stack(*stack_b);
-	// ft_final_sort(stack_a);
+
+	// printf("Stack A\n");
+	// ft_display_stack(*stack_a);
+	// printf("Stack B\n");
+	// ft_display_stack(*stack_b);
+
+	ft_final_sort(stack_a, median);
 }
 
-void	ft_final_sort(t_stack **stack_a)
+void	ft_final_sort(t_stack **stack_a, int median)
 {
-	int count;
-	int i;
+	t_stack	*temp;
+	int pos;
 
-	count = 0;
-	i = 0;
-	if ((*stack_a)->index != ((*stack_a)->position + 1))
+	temp = (*stack_a);
+	pos = 0;
+	while (temp)
 	{
-		count = (*stack_a)->index - ((*stack_a)->position + 1);
-		// printf("COUNT: %d", count);
-	}
-	if (count < 0)
-	{
-		while (i < count)
+		if (temp->index == 1)
 		{
-			ft_ra(stack_a);
-			i++;
+			if (temp->position > median)
+				pos = 1;
+			else
+				pos = -1;
 		}
+		temp = temp->next;
 	}
-	else if (count > 0)
+	while ((*stack_a)->index != 1)
 	{
-		while (i < count)
-		{
+		if (pos > 0)
 			ft_rra(stack_a);
-			i++;
-		}
+		if (pos < 0)
+			ft_ra(stack_a);
 	}
 }
 
@@ -222,6 +221,10 @@ void	ft_set_target_position(t_stack **stack_a, t_stack **stack_b)
 			if (temp_a->index < temp_b->index && temp_a->next != NULL && temp_a->next->index > temp_b->index)
 			{
 				target_pos = temp_a->next->position;
+			}
+			else if (temp_a->position == 0 && temp_a->index > temp_b->index && ft_stack_last(temp_a)->index < temp_b->index)
+			{
+				target_pos = 0;
 			}
 			temp_a = temp_a->next;
 		}
@@ -377,23 +380,24 @@ int ft_abs(int val)
 		return (-val);
 }
 
-t_stack	**ft_small_cost(t_stack *stack, t_stack **lowest_cost)
+t_stack	**ft_small_cost(t_stack **stack, t_stack **lowest_cost)
 {
 	t_stack	*temp;
 	int lowest;
 
-	temp = stack;
+	temp = (*stack);
 	lowest = INT_MAX;
-	while (stack != NULL)
+	while (temp)
 	{
-		if ((temp->cost_a + temp->cost_b) < lowest)
+		if ((ft_abs(temp->cost_a) + ft_abs(temp->cost_b)) < lowest)
 		{
-			lowest = temp->cost_a + temp->cost_b;
+			lowest = ft_abs(temp->cost_a) + ft_abs(temp->cost_b);
 			(*lowest_cost) = temp;
 		}
-		stack = stack->next;
+		temp = temp->next;
 	}
-	stack = temp;
+	// printf("LOWEST: %d - INDEX: %d\n", lowest, temp->index);
+	// (*stack) = temp;
 	return (lowest_cost);
 }
 
