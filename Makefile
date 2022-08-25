@@ -1,9 +1,23 @@
 NAME = push_swap
 
-SRCS_FILES = push_swap.c
+SRCS_FILES =	push_swap.c \
+				costs.c \
+				init.c \
+				movements_reverse_rotate.c \
+				movements_rotate.c \
+				positions.c \
+				push.c \
+				reverse_rotate.c \
+				rotate.c \
+				sorting.c \
+				swap.c \
+				target_positions.c \
+				utils_stack.c \
+				utils.c \
+
 SRCS_PATH = src/
 
-SRCS = $(addprefix $(SRCS_PATH), $(SRCS_FILES))
+SRCS =	$(addprefix $(SRCS_PATH), $(SRCS_FILES))
 
 AR = ar
 CC = gcc
