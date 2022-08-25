@@ -14,6 +14,7 @@ SRCS_FILES =	push_swap.c \
 				target_positions.c \
 				utils_stack.c \
 				utils.c \
+				parsing.c \
 
 SRCS_PATH = src/
 
