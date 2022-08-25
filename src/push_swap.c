@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/25 18:59:05 by aradice           #+#    #+#             */
-/*   Updated: 2022/08/25 18:59:05 by aradice          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
 void	ft_free_all(t_stack *stack)
@@ -59,6 +47,7 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	if (argc == 1)
 		return (0);
+	ft_parsing(argv);
 	ft_init_all(&stack_a, argc, argv);
 	ft_index(stack_a, argc);
 	ft_push_swap(&stack_a, &stack_b, argc);
