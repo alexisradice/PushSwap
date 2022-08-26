@@ -45,13 +45,12 @@ int	main(int argc, char **argv)
 
 	stack_a = NULL;
 	stack_b = NULL;
-	if (argc == 1)
+	if (argc <= 2)
 		return (0);
 	ft_parsing(argv);
 	ft_init_all(&stack_a, argc, argv);
 	ft_index(stack_a, argc);
 	ft_push_swap(&stack_a, &stack_b, argc);
 	ft_free_all(stack_a);
-	ft_free_all(stack_b);
 	return (0);
 }

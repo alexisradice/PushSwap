@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 22:45:10 by aradice           #+#    #+#             */
-/*   Updated: 2022/08/25 23:16:48 by aradice          ###   ########.fr       */
+/*   Updated: 2022/08/26 23:57:55 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,44 @@
 
 void	ft_parsing(char **argv)
 {
-	int	i;
-	int	y;
-	
+	int		i;
+	int		y;
+	char	*test;
+
 	i = 1;
 	y = 1;
 	while (argv[i])
 	{
-		if (!ft_atoi(argv[i]))
-		{
-			printf("test");
-			exit(1);
-		}
-		if (ft_atoi(argv[i]) > INT_MAX || ft_atoi(argv[i]) < INT_MIN)
-		{
-			printf("test2");
-			exit(1);
-		}
+		test = ft_itoa(ft_atoi(argv[i]));
+		if (!ft_atoi(argv[i]) && ft_abs(ft_atoi(argv[i])) != 0)
+			ft_exit(test);
+		if (ft_strcmp(test, argv[i]) != 0)
+			ft_exit(test);
 		y = i + 1;
 		while (argv[y])
 		{
 			if (ft_atoi(argv[i]) == ft_atoi(argv[y]))
-			{
-				printf("test3");
-				exit(1);
-			}
+				ft_exit(test);
 			y++;
 		}
 		i++;
+		free(test);
 	}
+}
+
+void	ft_exit(char *test)
+{
+	free(test);
+	write(2, "Error\n", 6);
+	exit(1);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 21:23:12 by aradice           #+#    #+#             */
-/*   Updated: 2022/08/25 21:38:34 by aradice          ###   ########.fr       */
+/*   Updated: 2022/08/27 00:33:42 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc)
 	int		count_b;
 	t_stack	*lowest_cost;
 
+	ft_first_check(stack_a);
 	lowest_cost = NULL;
 	median = (argc - 1) / 2;
 	count_b = 0;
@@ -108,4 +109,22 @@ void	ft_final_sort(t_stack **stack_a, int median)
 		if (pos < 0)
 			ft_ra(stack_a);
 	}
+}
+
+void	ft_first_check(t_stack **stack_a)
+{
+	t_stack	*temp;
+	int		val;
+
+	temp = (*stack_a);
+	val = 0;
+	while (temp)
+	{
+		if (temp->index > val)
+			val = temp->index;
+		else
+			return ;
+		temp = temp->next;
+	}
+	ft_free_all(*stack_a);
 }
