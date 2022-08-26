@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 19:20:56 by aradice           #+#    #+#             */
-/*   Updated: 2022/08/25 22:58:08 by aradice          ###   ########.fr       */
+/*   Updated: 2022/08/27 00:21:24 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ typedef struct s_stack
 t_stack	*ft_new_stack(int content);
 void	ft_init_all(t_stack **stack, int argc, char **argv);
 void	ft_parsing(char **argv);
+int		ft_strcmp(char *s1, char *s2);
+void	ft_exit(char *test);
 void	ft_index(t_stack *stack, int argc);
 void	ft_small_sort(t_stack **stack);
 void	ft_median_sort(t_stack **stack_a,
 			t_stack **stack_b, int argc, int median);
 void	ft_big_sort(t_stack **stack_a, t_stack **stack_b, int argc);
+void	ft_first_check(t_stack **stack_a);
 void	ft_set_target_position(t_stack **stack_a, t_stack **stack_b);
 void	ft_target_position(t_stack *temp_a, t_stack *temp_b, int *target_pos);
 void	ft_lowest_index(t_stack *temp_a, int *target_pos, int *lowest);
