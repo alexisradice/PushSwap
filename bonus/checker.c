@@ -20,7 +20,8 @@ void ft_checker(int argc, t_stack **stack_a, t_stack **stack_b)
 	fd = 0;
 	while(1)
 	{
-		line = get_next_line(fd);
+		line = ft_strdup("");
+		line = ft_read_moves(fd, line);
 		if(!line)
 		{
 			if (ft_check_sort(stack_a, argc))
@@ -92,4 +93,41 @@ int ft_check_moves(t_stack **stack_a, t_stack **stack_b, char *line)
 	else
 		return (0);
 	return (1);
+}
+
+char	*ft_read_moves(int fd, char *line)
+{
+	int		readval;
+	char	*buffer;
+
+	buffer = malloc(sizeof(char) * 2);
+	if (!buffer)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	readval = 1;
+	while (!ft_strchr_checker(line, '\n') && readval != 0)
+	{
+		readval = read(fd, buffer, 1);
+		if (readval == -1)
+			ft_read_error(line, buffer);
+		buffer[readval] = '\0';
+		line = ft_strjoin_checker(line, buffer);
+	}
+	free(buffer);
+	if (!line[0])
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
+}
+
+void	ft_read_error(char *line, char *buffer)
+{
+	free(buffer);
+	free(line);
+	ft_printf("Error\n");
+	exit(1);
 }

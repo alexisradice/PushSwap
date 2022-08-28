@@ -33,6 +33,7 @@ SRCS_FILES_BONUS =	push_swap_bonus.c \
 					utils_bonus.c \
 					parsing_bonus.c \
 					checker.c \
+					checker_utils.c \
 
 SRCS_PATH = src/
 SRCS_PATH_BONUS = bonus/
