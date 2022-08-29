@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 04:00:36 by aradice           #+#    #+#             */
-/*   Updated: 2022/08/28 04:00:50 by aradice          ###   ########.fr       */
+/*   Updated: 2022/08/29 02:21:24 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	*ft_strjoin_checker(char *s1, char *s2)
 
 	s1size = 0;
 	s2size = 0;
-	test = malloc(sizeof(char) * (ft_strlen_checker(s1) + ft_strlen_checker(s2) + 1));
+	test = malloc(sizeof(char) * (ft_strlen_checker(s1)
+				+ ft_strlen_checker(s2) + 1));
 	if (!test)
 		return (NULL);
 	while (s1 && s1[s1size])

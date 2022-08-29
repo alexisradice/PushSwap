@@ -12,29 +12,29 @@
 
 #include "push_swap_bonus.h"
 
-void ft_checker(int argc, t_stack **stack_a, t_stack **stack_b)
+void	ft_checker(int argc, t_stack **stack_a, t_stack **stack_b)
 {
 	int		fd;
 	char	*line;
-	
+
 	fd = 0;
-	while(1)
+	while (1)
 	{
 		line = ft_strdup("");
 		line = ft_read_moves(fd, line);
-		if(!line)
+		if (!line)
 		{
 			if (ft_check_sort(stack_a, argc))
 				ft_printf("OK\n");
 			else
 				ft_printf("KO\n");
-			break;
+			break ;
 		}
 		if (!ft_check_moves(stack_a, stack_b, line))
 		{
 			write(2, "Error\n", 6);
 			free(line);
-			break;
+			break ;
 		}
 		free(line);
 	}
@@ -66,29 +66,29 @@ int	ft_check_sort(t_stack **stack_a, int argc)
 	return (1);
 }
 
-int ft_check_moves(t_stack **stack_a, t_stack **stack_b, char *line)
+int	ft_check_moves(t_stack **stack_a, t_stack **stack_b, char *line)
 {
-	if(ft_strcmp(line, "sa\n") == 0)
+	if (ft_strcmp(line, "sa\n") == 0)
 		ft_sa(stack_a);
-	else if(ft_strcmp(line, "sb\n") == 0)
+	else if (ft_strcmp(line, "sb\n") == 0)
 		ft_sb(stack_b);
-	else if(ft_strcmp(line, "ss\n") == 0)
+	else if (ft_strcmp(line, "ss\n") == 0)
 		ft_ss(stack_a, stack_b);
-	else if(ft_strcmp(line, "pa\n") == 0)
+	else if (ft_strcmp(line, "pa\n") == 0)
 		ft_pa(stack_a, stack_b);
-	else if(ft_strcmp(line, "pb\n") == 0)
+	else if (ft_strcmp(line, "pb\n") == 0)
 		ft_pb(stack_a, stack_b);
-	else if(ft_strcmp(line, "ra\n") == 0)
+	else if (ft_strcmp(line, "ra\n") == 0)
 		ft_ra(stack_a);
-	else if(ft_strcmp(line, "rb\n") == 0)
+	else if (ft_strcmp(line, "rb\n") == 0)
 		ft_rb(stack_b);
-	else if(ft_strcmp(line, "rr\n") == 0)
+	else if (ft_strcmp(line, "rr\n") == 0)
 		ft_rr(stack_a, stack_b);
-	else if(ft_strcmp(line, "rra\n") == 0)
+	else if (ft_strcmp(line, "rra\n") == 0)
 		ft_rra(stack_a);
-	else if(ft_strcmp(line, "rrb\n") == 0)
+	else if (ft_strcmp(line, "rrb\n") == 0)
 		ft_rrb(stack_b);
-	else if(ft_strcmp(line, "rrr\n") == 0)
+	else if (ft_strcmp(line, "rrr\n") == 0)
 		ft_rrr(stack_a, stack_b);
 	else
 		return (0);

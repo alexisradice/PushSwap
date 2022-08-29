@@ -81,7 +81,7 @@ void	ft_rr(t_stack **stack_a, t_stack **stack_b);
 void	ft_rra(t_stack **stack_a);
 void	ft_rrb(t_stack **stack_b);
 void	ft_rrr(t_stack **stack_a, t_stack **stack_b);
-void 	ft_checker(int argc, t_stack **stack_a, t_stack **stack_b);
+void	ft_checker(int argc, t_stack **stack_a, t_stack **stack_b);
 int		ft_check_moves(t_stack **stack_a, t_stack **stack_b, char *line);
 int		ft_check_sort(t_stack **stack_a, int argc);
 char	*ft_read_moves(int fd, char *line);
