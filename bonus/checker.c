@@ -128,6 +128,6 @@ void	ft_read_error(char *line, char *buffer)
 {
 	free(buffer);
 	free(line);
-	ft_printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }
