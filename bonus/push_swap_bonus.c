@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 
 	stack_a = NULL;
 	stack_b = NULL;
-	if (argc <= 2)
+	if (argc <= 1)
 		return (0);
 	ft_parsing(argv);
 	ft_init_all(&stack_a, argc, argv);

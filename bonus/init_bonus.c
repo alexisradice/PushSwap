@@ -40,7 +40,10 @@ t_stack	*ft_new_stack(int content)
 
 	test = malloc (sizeof(t_stack) * 1);
 	if (!test)
-		return (NULL);
+	{
+		write(2, "Error\n", 6);
+		exit(1);
+	}
 	test -> value = content;
 	test -> index = 0;
 	test -> next = NULL;
